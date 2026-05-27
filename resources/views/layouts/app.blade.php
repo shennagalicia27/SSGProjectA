@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'SSG Project') }}</title>
-    <link rel="stylesheet" href="{{ asset('app.css') }}">
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="app-shell">
     @php($sessionUser = session('user_account'))
@@ -55,6 +55,5 @@
     </main>
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>

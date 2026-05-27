@@ -1,3 +1,14 @@
+FROM node:22-bookworm-slim AS frontend
+
+WORKDIR /app
+
+COPY package.json ./
+RUN npm install
+
+COPY resources ./resources
+COPY vite.config.js ./
+RUN npm run build
+
 FROM php:8.2-apache
 
 RUN apt-get update && apt-get install -y \
@@ -30,6 +41,7 @@ RUN composer install \
     --no-scripts
 
 COPY . .
+COPY --from=frontend /app/public/build ./public/build
 
 RUN mkdir -p database storage/framework/cache/data storage/framework/sessions storage/framework/views storage/logs bootstrap/cache \
     && touch database/database.sqlite \
